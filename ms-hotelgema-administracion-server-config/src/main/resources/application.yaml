@@ -1,0 +1,28 @@
+server:
+  port: 7777
+spring:
+  profiles:
+    active: default
+  application:
+    name: ms-hotelgema-administracion-server-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/serg1o21/microservice-config.git
+          default-label: main
+          clone-on-start: true
+          username: serg1o21
+          password: ${GIT_TOKEN}
+
+eureka:
+  instance:
+    instance-id: "${spring.application.name}:${random.value}"
+    leaseRenewalIntervalInSeconds: 5     # heartbeat cada 5s
+    leaseExpirationDurationInSeconds: 10 # expira si no responde en 10s
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://ms-hotelgema-administracion-server-registry:8761/eureka/

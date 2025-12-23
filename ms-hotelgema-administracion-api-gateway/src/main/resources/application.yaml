@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: ms-hotelgema-administracion-api-gateway
+  profiles:
+    default: eureka-on
+server:
+  port: 4040
+eureka:
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://ms-hotelgema-administracion-server-registry:8761/eureka/

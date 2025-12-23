@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ms-hotelgema-administracion-server-registry
+
+server:
+  port: 8761
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+  server:
+    enable-self-preservation: false              # desactiva modo seguro
+    eviction-interval-timer-in-ms: 5000          # limpia instancias cada 5s

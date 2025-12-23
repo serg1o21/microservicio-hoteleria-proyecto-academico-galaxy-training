@@ -1,0 +1,86 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.9'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.proyectosmera'
+version = '0.0.1-SNAPSHOT'
+description = 'Microservicio para la gestión de reservas del hotel Gema'
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' } 	//Repositorio de Spring Milestones
+}
+
+//Variables de versiones
+def mapstructVersion = '1.6.3'
+def lombokVersion = '1.18.34'
+
+ext {
+	set('springCloudVersion', "2023.0.0")
+}
+
+dependencies {
+	// Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// MySQL
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// MapStruct
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+	//KAFKA
+	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
+	// Lombok
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+	// Lombok + MapStruct binding
+	compileOnly 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	// DevTools (solo para desarrollo)
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//Eureka Client
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+	//server config
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+	//circuit breaker
+	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+	//actuator
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	//openfeign
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorPath = configurations.annotationProcessor
+	options.compilerArgs += [
+			'-Amapstruct.defaultComponentModel=spring'
+	]
+	options.encoding = 'UTF-8'
+}
+tasks.named('test', Test) {
+	useJUnitPlatform()
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Reserva</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 620px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        .header {
+            background: linear-gradient(90deg, #0b5ed7, #084298);
+            color: #ffffff;
+            padding: 22px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+        .content {
+            padding: 25px;
+            color: #333333;
+            font-size: 14px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0b5ed7;
+            padding: 15px;
+            margin: 18px 0;
+        }
+        .info-box p {
+            margin: 6px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th {
+            background-color: #e9ecef;
+            padding: 10px;
+            font-size: 13px;
+            text-align: left;
+        }
+        td {
+            padding: 10px;
+            font-size: 13px;
+            border-bottom: 1px solid #dddddd;
+        }
+        .total {
+            text-align: right;
+            margin-top: 18px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #0b5ed7;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #198754;
+            color: #ffffff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+        .footer {
+            background-color: #f1f3f5;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Hotel Gema</h1>
+        <p>Confirmación de Reserva</p>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <p>Hola <strong th:text="${nombre}">Usuario</strong>,</p>
+
+        <p>
+            Nos complace informarte que tu reserva ha sido
+            <strong>confirmada</strong>.
+            <span class="badge">Confirmada</span>
+        </p>
+
+        <div class="info-box">
+            <p><strong>N° de Reserva:</strong> <span th:text="${numReserva}">12345</span></p>
+            <p><strong>Check-in:</strong> <span th:text="${checkIn}">2025-12-01</span></p>
+            <p><strong>Check-out:</strong> <span th:text="${checkOut}">2025-12-05</span></p>
+        </div>
+
+        <h3>Detalle de la Estadía</h3>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Habitación</th>
+                <th>Días</th>
+                <th>Precio / Noche</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${detalle}">
+                <td th:text="${item.numeroHabitacion}">101</td>
+                <td th:text="${item.dias}">3</td>
+                <td th:text="${item.precioPorNoche}">120.00</td>
+                <td th:text="${item.subtotal}">360.00</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="total">
+            Total a pagar:
+            <span th:text="${total}">
+                360.00
+            </span>
+        </p>
+
+        <p>
+            Gracias por elegir <strong>Hotel Gema</strong>.
+            ¡Será un placer recibirte!
+        </p>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>© 2025 Hotel Gema · Todos los derechos reservados</p>
+        <p>Este correo fue generado automáticamente</p>
+    </div>
+
+</div>
+
+</body>
+</html>
